@@ -21,36 +21,43 @@
             <h2 id="form-container-title">This is not a real online service! You know you need something<br> like this in your life to help you realize your deepest dreams<br>
                 <br><br> You <em>know</em> you want to
             </h2>
-            <form id="form">
+            <form id="form" novalidate>
                 <h2>Let's do this</h2>
                 <section>
                     <p>
                         <label for="first-name"><span>FIRST NAME:</span></label>
-                        <input type="text" id="first-name" name="first-name" />
+                        <input minlenght="3" type="text" id="first-name" name="first-name" />
+                        <span class="" aria-live="polite"></span>
                     </p>
                     <p>
                         <label for="last-name"><span>LAST NAME:</span></label>
-                        <input type="text" id="last-name" name="last-name" />
+                        <input minlenght="3" type="text" id="last-name" name="last-name" />
+                        <span class="" aria-live="polite"></span>
                     </p>
                 </section>
                 <section>
                     <p>
                         <label for="email"><span>EMAIL:</span></label>
-                        <input type="email" id="email" name="email" />
+                        <input minlenght="3" type="email" id="email" name="email" required/>
+                        <span class="" aria-live="polite"></span>
                     </p>
                     <p>
                         <label for="phone"><span>PHONE NUMBER:</span></label>
-                        <input type="tel" id="phone" name="phone" />
+                        <input minlenght="3" maxlength="6" type="tel" id="phone" name="phone" required/>
+                        <span class="" aria-live="polite"></span>
                     </p>
                 </section>
                 <section>
                     <p>
                         <label for="password"><span>PASSWORD:</span></label>
-                        <input type="password" id="password" name="password" />
+                        <input minlenght="3" type="password" id="password" name="password" required/>
+                        <span class="" aria-live="polite"></span>
                     </p>
+
                     <p>
                         <label for="c_password"><span>CONFIRM PASSWORD:</span></label>
-                        <input type="password" id="c_password" name="c_password" />
+                        <input minlenght="3" type="password" id="c_password" name="c_password" required />
+                        <span class="" aria-live="polite"></span>
                     </p>
                 </section>
                 <section>
@@ -63,6 +70,57 @@
             </form>
         </div>
     </div>
+    <script>
+        window.addEventListener("load", () => {
+            const form = document.getElementById('form');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const first = document.getElementById('first-name');
+            const last = document.getElementById('last-name');
+            const pass = document.getElementById("password");
+            const c_pass = document.getElementById('c_password');
+            const type = {
+                password: "password",
+                email: "email",
+                tel: "tel"
+            }
+            let setError = (item, message) => {
+                let parent = item.parentNode
+                console.log(parent)
+                let span = parent.querySelector("span[aria-live]")
+                span.className = "error"
+                span.textContent = message
+            }
+            let removeError = (item) => {
+                let parent = item.parentNode
+                let span = parent.querySelector("span[aria-live]")
+                span.textContent = ""
+                span.className = ""
+            }
+            let toggleError = (item) => {
+                if (!item.value) {
+                    setError(item, "please fill this field")
+                } else {
+                    removeError(item)
+                }
+            }
+
+            [email, phone, first, last, pass, c_pass].forEach((item) => {
+                item.addEventListener("input", () => toggleError(item))
+            })
+            form.addEventListener("submit", (event) => {
+
+                if (pass.validity.valid && c_pass.validity.valid && pass.value == c_pass.value) {
+                    alert("submitted")
+                } else {
+                    [email, phone, first, last, pass, c_pass].forEach(item => {
+                        toggleError(item)
+                    })
+                }
+                event.preventDefault();
+            });
+        })
+    </script>
 </body>
 
 </html>

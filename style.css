@@ -108,3 +108,25 @@ h2 {
     background-color: #596D48;
     border: none;
 }
+
+#form button:hover {
+    cursor: pointer;
+}
+
+#form input.password:invalid,
+#form input.c_password:invalid {
+    background-color: rgba(251, 7, 7, 0.2);
+    border-color: rgba(251, 7, 7, 0.5);
+}
+
+.error {
+    vertical-align: middle;
+    width: 60%;
+    height: 30px;
+    padding: 0;
+    font-size: 1rem;
+    color: white;
+    background-color: #900;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
